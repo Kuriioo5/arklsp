@@ -1,8 +1,24 @@
-#include "server.hpp"
+/**
+ * @file main.cpp
+ * @author Kuriioo5 (github.com/Kuriioo5)
+ */
 
-int main()
+import lsp.Server;
+
+auto main() -> int
 {
     lsp::Server server;
+    server.Start();
 
-    return 0; 
+    while (server.IsRunning())
+    {
+        auto message = server.ReadMessage();
+
+        if (!message)
+        {
+            break;
+        }
+
+        server.HandleMessage(*message);
+    }
 }
